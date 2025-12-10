@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unity Remote Control</title>
+</head>
+<body>
+
+    <h1>Unity Controller</h1>
+    <button id="btnAction">TRIGGER EVENT</button>
+    <p id="status">Status: Disconnected</p>
+
+    <script>
+        // Connect to the Node.js server we created
+        const socket = new WebSocket('ws://orb.thomaskeig.com:1038');
+
+        socket.onopen = function() {
+            document.getElementById("status").innerText = "Status: Connected";
+        };
+
+        document.getElementById("btnAction").addEventListener("click", () => {
+            if(socket.readyState === WebSocket.OPEN) {
+                // Send the command "spawn_cube" to the server
+                socket.send("spawn_cube");
+                console.log("Sent: spawn_cube");
+            }
+        });
+    </script>
+</body>
+</html>
